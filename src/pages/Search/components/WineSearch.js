@@ -1,27 +1,12 @@
-import logo from '../assets/logo.svg';
-import AutoComplete from '@vintrace/ui/elements/AutoComplete';
-import useLocale from '@vintrace/ui/hooks/useLocale';
-import { useCallback, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { forwardRef, useCallback } from 'react';
 import { useNavigate } from 'react-router';
+import AutoComplete from '../../../components/elements/AutoComplete';
+import useLocale from '../../../hooks/useLocale';
 
-function Search() {
+const WineSearch = forwardRef(({ suggestions }, ref) => {
   const navigate = useNavigate();
-  const [suggestions, setSuggestions] = useState([]);
   const locale = useLocale();
-
-  useEffect(() => {
-    const data = ['11YVCHAR001', '11YVCHAR002', '15MPPN002-VK'];
-
-    const fetchAllSuggestions = async () => {
-      const results = await Promise.all(
-        data.map((x) => fetch(`/data/${x}.json`).then((x) => x.json())),
-      );
-
-      setSuggestions(results);
-    };
-
-    fetchAllSuggestions();
-  }, [setSuggestions]);
 
   const onFilterOptions = useCallback(
     (value) => {
@@ -94,27 +79,24 @@ function Search() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center pt-36 gap-6">
-      <header>
-        <h1 className="flex gap-4 items-center text-h3 font-light">
-          Wine search
-          <img src={logo} alt="Vintrace" />
-        </h1>
-      </header>
-      <main className="max-w-sm w-full">
-        <AutoComplete
-          id="wine-autocomplete"
-          suggestions={suggestions}
-          onFilterOptions={onFilterOptions}
-          onGetLabel={onGetLabel}
-          onGetKey={onGetKey}
-          onSelect={onSelect}
-          placeholder="Search by lot code and description......"
-          autoFocus
-        />
-      </main>
-    </div>
+    <AutoComplete
+      ref={ref}
+      id="wine-autocomplete"
+      suggestions={suggestions}
+      onFilterOptions={onFilterOptions}
+      onGetLabel={onGetLabel}
+      onGetKey={onGetKey}
+      onSelect={onSelect}
+      placeholder="Search by lot code and description......"
+      autoFocus
+    />
   );
-}
+});
 
-export default Search;
+WineSearch.displayName = 'WineSearch';
+WineSearch.propTypes = {
+  /** List of possible autocomplete suggestions */
+  suggestions: PropTypes.array,
+};
+
+export default WineSearch;

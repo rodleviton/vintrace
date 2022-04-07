@@ -31,7 +31,6 @@ const TextField = forwardRef(
       errorMessage,
       hideError,
       inputRef,
-      role,
       aria,
       ...props
     },
@@ -67,6 +66,7 @@ const TextField = forwardRef(
           )}
           <input
             id={`${id}-field-input`}
+            data-testid={`${id}-field-input`}
             className={[
               'px-5 py-3 border text-sm focus:outline-none focus:ring ring-offset-0 ring-blue-400 rounded-sm w-full h-12',
               iconStart ? 'pl-12' : '',
@@ -87,7 +87,6 @@ const TextField = forwardRef(
             value={value}
             autoFocus={autoFocus}
             autoComplete={autoComplete}
-            role={role}
             type={type}
             {...aria}
           />
@@ -163,7 +162,6 @@ TextField.propTypes = {
   iconStart: PropTypes.node,
   /** Optional icon positioned at end of input */
   iconEnd: PropTypes.node,
-  role: PropTypes.string,
   /** Array of aria accessibility attributes */
   aria: PropTypes.object,
   /** Optional ref to be applied to input */

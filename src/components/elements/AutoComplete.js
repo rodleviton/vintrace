@@ -163,8 +163,8 @@ const AutoComplete = forwardRef(
           value={input}
           autoComplete="off"
           autoFocus={autoFocus}
-          role="combobox"
           aria={{
+            role: 'combobox',
             'aria-autocomplete': 'list',
             'aria-expanded': !!(showSuggestions && input),
           }}

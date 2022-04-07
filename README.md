@@ -1,15 +1,23 @@
-# Vintrace 🍷
-
-**Wine search app**
+# Wine Search App 🍷
 
 ## Introduction
 
-This repo contains the necessary tools and packages that are used to build out Vintrace wine search app. This document aims to give you a detailed overview of the different parts that make up the Vintrace wine search app front-end application and instructions on how to run them.
+This repo contains the necessary tools and packages that are used to build out Vintrace wine search app.
 
-## Prerequisites
+## Project Highlights
 
-The repository uses [yarn workspaces](https://classic.yarnpkg.com/lang/en/docs/workspaces/) to independently manage the dependencies of each of the marquee offers pages. For more info on a specific package, see its respective `README`.
+* [UX] - Search input auto focuses on page load 🤯
+* [UX] - Responsive ✨
+* [Accessibility] - Autocomplete component respects WCAG AA standards 💥
+* [Code] - App uses [Tailwind](https://tailwindcss.com/) utility css library for theming and smaller bundle size 🔥
+* [Code] - Over engineered component structure to emphasise composability and reuse! 😍
+* [Testing] - Some unit test coverage for edge cases 🤠
 
+## Possible Improvements
+* Monorepo - Using a tool like Yarn/NPM workspaces break discrete areas of application up into smaller packages to promote maintainabilty, discoverabilty (components) and reuse. 🚝
+* Retrieve larger dataset from API to properly test UI and edge cases
+* E2E testing of primary user flows (i.e. Cypress)
+  
 ## Getting started
 
 ### 1. Install global dependencies
@@ -18,7 +26,6 @@ The [rodleviton/vintrace](https://github.com/rodleviton/vintrace) repo has a num
 
 1. [node](https://nodejs.org/en/) — javaScript runtime built on Chrome's V8 JavaScript engine.
 2. [npm](https://www.npmjs.com/get-npm) — Node package manager (Specific versions will be bundled with Node but can be upgraded independently if required).
-3. [yarn](https://classic.yarnpkg.com/en/docs/install#mac-stable) Package manager and Monorepo orchestrator
 
 ### 2. Set up the repository
 
@@ -35,30 +42,28 @@ git clone git@github.com:rodleviton/vintrace.git
 ```bash
 # install dependencies
 cd vintrace
-yarn install
+npm install
 ```
-
-> This command can be run from within a specific workspace folder but will install dependencies for **all** workspaces regardless.
 
 ### 3. Run web application locally
 
 ```bash
-yarn start # this will run the main vintrace app
+npm start
 ```
 
-## Workspaces structure
+## Folder structure
 
-Following is a breakdown of all the packages currently contained within the monorepo.
+Following is a breakdown of the application folder structure.
 
 ```markdown
-├── / - root workspace.
-├── app/ - main front-end application.
-└── @vintrace/
-    ├── storybook - Vintrace's component documentation.
-    └── components - Vintrace's shared component library.
+├── /
+└── src/
+    ├── assets - static images to be imported into components
+    ├── components - shared application components
+    ├── hooks - shared application hooks
+    ├── pages - main page route components
+    └── storybook - component documentation
 ```
-
-> Refer to each workspace README.md for specific documentation.
 
 ## Tips & Tricks
 
