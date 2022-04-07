@@ -1,70 +1,67 @@
-# Getting Started with Create React App
+# Vintrace 🍷
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Wine search app**
 
-## Available Scripts
+## Introduction
 
-In the project directory, you can run:
+This repo contains the necessary tools and packages that are used to build out Vintrace wine search app. This document aims to give you a detailed overview of the different parts that make up the Vintrace wine search app front-end application and instructions on how to run them.
 
-### `npm start`
+## Prerequisites
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The repository uses [yarn workspaces](https://classic.yarnpkg.com/lang/en/docs/workspaces/) to independently manage the dependencies of each of the marquee offers pages. For more info on a specific package, see its respective `README`.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Getting started
 
-### `npm test`
+### 1. Install global dependencies
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The [rodleviton/vintrace](https://github.com/rodleviton/vintrace) repo has a number of global dependencies:
 
-### `npm run build`
+1. [node](https://nodejs.org/en/) — javaScript runtime built on Chrome's V8 JavaScript engine.
+2. [npm](https://www.npmjs.com/get-npm) — Node package manager (Specific versions will be bundled with Node but can be upgraded independently if required).
+3. [yarn](https://classic.yarnpkg.com/en/docs/install#mac-stable) Package manager and Monorepo orchestrator
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 2. Set up the repository
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### Clone the repo
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+cd [somewhere/you/keep/code]
+git clone git@github.com:rodleviton/vintrace.git
 
-### `npm run eject`
+> (Requires [ssh keys](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh) to be configured)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+#### Install dependencies
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+# install dependencies
+cd vintrace
+yarn install
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+> This command can be run from within a specific workspace folder but will install dependencies for **all** workspaces regardless.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### 3. Run web application locally
 
-## Learn More
+```bash
+yarn start # this will run the main vintrace app
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Workspaces structure
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Following is a breakdown of all the packages currently contained within the monorepo.
 
-### Code Splitting
+```markdown
+├── / - root workspace.
+├── app/ - main front-end application.
+└── @vintrace/
+    ├── storybook - Vintrace's component documentation.
+    └── components - Vintrace's shared component library.
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+> Refer to each workspace README.md for specific documentation.
 
-### Analyzing the Bundle Size
+## Tips & Tricks
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Managing Node Versions
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+To assist with more easily managing node versions across projects, this folder includes an `.nvmrc` file that contains the recommended node version for this project. If you are using [NVM](https://github.com/nvm-sh) to manage your node version you can configure your bash profile to automatically change your node version to the version specified in the `.nvmrc` file. Follow the guide [here](https://github.com/nvm-sh/nvm#nvmrc).
