@@ -8,7 +8,10 @@ This repo contains the necessary tools and packages that are used to build out V
 
 * [UX] - Search input auto focuses on page load 🤯
 * [UX] - Responsive ✨
-* [Accessibility] - Autocomplete component respects WCAG AA standards 💥
+* [UX] - Persistant wine details view tab based on users last selection (localStorage) top	🐘
+* [UX] - Localise units formatting (liters) 🇫🇷
+* [Accessibility] - Autocomplete component respects WCAG AA recommendations 💥
+* [Accessibility] - Wine details tab component respects WCAG AA recommendations 🌈
 * [Code] - App uses [Tailwind](https://tailwindcss.com/) utility css library for theming and smaller bundle size 🔥
 * [Code] - Over engineered component structure to emphasise composability and reuse! 😍
 * [Testing] - Some unit test coverage for edge cases 🤠
@@ -17,6 +20,7 @@ This repo contains the necessary tools and packages that are used to build out V
 * Monorepo - Using a tool like Yarn/NPM workspaces break discrete areas of application up into smaller packages to promote maintainabilty, discoverabilty (components) and reuse. 🚝
 * Retrieve larger dataset from API to properly test UI and edge cases
 * E2E testing of primary user flows (i.e. Cypress)
+* Animations to improve usability i.e. Slide animation on "show/hide more" wine details rows
   
 ## Getting started
 

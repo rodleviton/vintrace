@@ -20,16 +20,18 @@ function Search() {
   }, [setSuggestions]);
 
   return (
-    <div className="flex flex-col items-center pt-36 gap-6">
-      <header>
-        <h1 className="flex gap-4 items-center text-h3 font-light">
-          Wine search
-          <img src={logo} alt="Wine glass" />
-        </h1>
-      </header>
-      <main className="max-w-sm w-full">
-        <WineSearch suggestions={suggestions} />
-      </main>
+    <div className="flex flex-col items-center pt-36 ">
+      <div className="max-w-sm w-full gap-6 flex flex-col">
+        <header className="flex justify-center">
+          <h1 className="flex gap-4 items-center text-h3 font-light">
+            Wine search
+            <img src={logo} alt="Wine glass" />
+          </h1>
+        </header>
+        <main>
+          <WineSearch suggestions={suggestions} />
+        </main>
+      </div>
     </div>
   );
 }

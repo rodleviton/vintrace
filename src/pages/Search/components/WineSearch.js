@@ -51,7 +51,7 @@ const WineSearch = forwardRef(({ suggestions }, ref) => {
                 }}
               />
             ) : (
-              <p>
+              <p className="text-sm">
                 <em>No description provided</em>
               </p>
             )}
