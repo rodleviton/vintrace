@@ -21,6 +21,7 @@ This repo contains the necessary tools and packages that are used to build out V
 * Retrieve larger dataset from API to properly test UI and edge cases
 * E2E testing of primary user flows (i.e. Cypress)
 * Animations to improve usability i.e. Slide animation on "show/hide more" wine details rows
+* Add component documentation and sandbox (i.e. Storybook)
   
 ## Getting started
 
@@ -65,8 +66,7 @@ Following is a breakdown of the application folder structure.
     ├── assets - static images to be imported into components
     ├── components - shared application components
     ├── hooks - shared application hooks
-    ├── pages - main page route components
-    └── storybook - component documentation
+    └── pages - main page route components
 ```
 
 ## Tips & Tricks
