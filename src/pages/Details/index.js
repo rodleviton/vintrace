@@ -2,8 +2,10 @@ import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import useLocale from '../../hooks/useLocale';
 import WineIcon from '../../components/icons/WineIcon';
+import EditIcon from '../../components/icons/EditIcon';
 import LeftArrowIcon from '../../components/icons/LeftArrowIcon';
 import WineDetailsTabs from './components/WineDetailsTabs';
+import fireworks from '../../utils/fireworks';
 
 function Details() {
   const locale = useLocale();
@@ -52,19 +54,28 @@ function Details() {
               <LeftArrowIcon />
             </button>
           </div>
-          <div className="flex flex-col gap-1">
-            <div className="flex gap-2 items-center">
-              <div>
-                <WineIcon size={32} />
-              </div>
+          <div className="flex justify-between">
+            <div className="flex flex-col gap-1">
+              <div className="flex gap-2 items-center">
+                <div>
+                  <WineIcon size={32} />
+                </div>
 
-              <h1 className="text-h3 md:text-h1 font-light">{wine.lotCode}</h1>
+                <h1 className="text-h3 md:text-h1 font-light">
+                  {wine.lotCode}
+                </h1>
+              </div>
+              {wine.description && (
+                <p className="text-h6 md:text-h4 font-light">
+                  {wine.description}
+                </p>
+              )}
             </div>
-            {wine.description && (
-              <p className="text-h6 md:text-h4 font-light">
-                {wine.description}
-              </p>
-            )}
+            <div>
+              <button className="text-white p-4 bg-aqua shadow-lg rounded-full -mt-4 transition-all filter hover:brightness-90">
+                <EditIcon onClick={fireworks} />
+              </button>
+            </div>
           </div>
         </header>
         <main className="flex flex-col gap-6">
