@@ -17,7 +17,7 @@ function Search() {
     };
 
     fetchAllSuggestions();
-  }, [setSuggestions]);
+  }, []);
 
   return (
     <div className="flex flex-col items-center pt-36 ">

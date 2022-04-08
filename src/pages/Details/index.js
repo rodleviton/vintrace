@@ -10,8 +10,8 @@ import fireworks from '../../utils/fireworks';
 function Details() {
   const locale = useLocale();
   const navigate = useNavigate();
-  const { lotCode } = useParams();
   const [wine, setWine] = useState({});
+  const { lotCode } = useParams();
 
   const onNavigateToSearch = useCallback(() => {
     navigate(`/`);
@@ -34,7 +34,7 @@ function Details() {
       // redirect back to search if wine `lotCode` is not valid
       onNavigateToSearch();
     }
-  }, [setWine, lotCode, onNavigateToSearch]);
+  }, [lotCode, onNavigateToSearch]);
 
   const AttributeRow = ({ label, value }) => (
     <div className="flex flex-col md:flex-row md:justify-between md:items-center">

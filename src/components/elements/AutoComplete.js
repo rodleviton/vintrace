@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { forwardRef, useCallback, useRef, useState } from 'react';
+import React, { forwardRef, useRef, useState } from 'react';
 import TextField from '../form/TextField';
 import useOnExit from '../../hooks/useOnExit';
 import TimesIcon from '../icons/TimesIcon';
@@ -32,95 +32,74 @@ const AutoComplete = forwardRef(
       setShowSuggestions(false);
     });
 
-    const defaultOnFilterOptions = useCallback(
-      (value) => {
-        suggestions.filter((suggestion) =>
-          suggestion.toLowerCase().includes(value.toLowerCase()),
-        );
-      },
-      [suggestions],
-    );
+    const defaultOnFilterOptions = (value) => {
+      suggestions.filter((suggestion) =>
+        suggestion.toLowerCase().includes(value.toLowerCase()),
+      );
+    };
 
-    const getLabel = useCallback(
-      (suggestion) => {
-        return onGetLabel ? onGetLabel(suggestion, input) : suggestion;
-      },
-      [onGetLabel, input],
-    );
+    const getLabel = (suggestion) => {
+      return onGetLabel ? onGetLabel(suggestion, input) : suggestion;
+    };
 
-    const getKey = useCallback(
-      (suggestion) => {
-        return onGetKey ? onGetKey(suggestion) : suggestion;
-      },
-      [onGetKey],
-    );
+    const getKey = (suggestion) => {
+      return onGetKey ? onGetKey(suggestion) : suggestion;
+    };
 
-    const onChange = useCallback(
-      ({ target: { value } }) => {
-        const result = onFilterOptions
-          ? onFilterOptions(value)
-          : defaultOnFilterOptions(value);
+    const onChange = ({ target: { value } }) => {
+      const result = onFilterOptions
+        ? onFilterOptions(value)
+        : defaultOnFilterOptions(value);
 
-        setInput(value);
-        setFilteredSuggestions(result);
-        setActiveSuggestionIndex(0);
-        setShowSuggestions(true);
-      },
-      [onFilterOptions, defaultOnFilterOptions],
-    );
+      setInput(value);
+      setFilteredSuggestions(result);
+      setActiveSuggestionIndex(0);
+      setShowSuggestions(true);
+    };
 
-    const onClick = useCallback(
-      (key, suggestion) => {
-        setFilteredSuggestions([]);
-        setInput(key);
+    const onClick = (key, suggestion) => {
+      setFilteredSuggestions([]);
+      setInput(key);
+      setActiveSuggestionIndex(0);
+      setShowSuggestions(false);
+
+      onSelect && onSelect(suggestion);
+    };
+
+    const clearInput = (e) => {
+      e.preventDefault();
+      setInput('');
+
+      // Refocus on input
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+    };
+
+    const onKeyDown = ({ keyCode }) => {
+      if (keyCode === 13) {
+        // Enter key
+        setInput(getKey(filteredSuggestions[activeSuggestionIndex]));
         setActiveSuggestionIndex(0);
         setShowSuggestions(false);
 
-        onSelect && onSelect(suggestion);
-      },
-      [onSelect],
-    );
-
-    const clearInput = useCallback(
-      (e) => {
-        e.preventDefault();
-        setInput('');
-
-        // Refocus on input
-        if (inputRef.current) {
-          inputRef.current.focus();
+        onSelect && onSelect(filteredSuggestions[activeSuggestionIndex]);
+      } else if (keyCode === 38) {
+        // Up arrow
+        if (activeSuggestionIndex === 0) {
+          return;
         }
-      },
-      [setInput],
-    );
 
-    const onKeyDown = useCallback(
-      ({ keyCode }) => {
-        if (keyCode === 13) {
-          // Enter key
-          setInput(getKey(filteredSuggestions[activeSuggestionIndex]));
-          setActiveSuggestionIndex(0);
-          setShowSuggestions(false);
-
-          onSelect && onSelect(filteredSuggestions[activeSuggestionIndex]);
-        } else if (keyCode === 38) {
-          // Up arrow
-          if (activeSuggestionIndex === 0) {
-            return;
-          }
-
-          setActiveSuggestionIndex(activeSuggestionIndex - 1);
-        } else if (keyCode === 40) {
-          // Down arrow
-          if (activeSuggestionIndex - 1 === filteredSuggestions.length) {
-            return;
-          }
-
-          setActiveSuggestionIndex(activeSuggestionIndex + 1);
+        setActiveSuggestionIndex(activeSuggestionIndex - 1);
+      } else if (keyCode === 40) {
+        // Down arrow
+        if (activeSuggestionIndex - 1 === filteredSuggestions.length) {
+          return;
         }
-      },
-      [activeSuggestionIndex, filteredSuggestions, getKey, onSelect],
-    );
+
+        setActiveSuggestionIndex(activeSuggestionIndex + 1);
+      }
+    };
 
     const SuggestionsList = () => (
       <>
@@ -131,7 +110,7 @@ const AutoComplete = forwardRef(
             filteredSuggestions.map((suggestion, index) => {
               return (
                 <li
-                  className={`px-3 py-3 border-t border-gray-200 ${
+                  className={`px-3 py-3 border-t border-gray-200 cursor-pointer ${
                     index === activeSuggestionIndex ? 'bg-blue-50' : ''
                   }`}
                   key={getKey(suggestion)}
@@ -141,7 +120,7 @@ const AutoComplete = forwardRef(
               );
             })
           ) : (
-            <li className="px-3 py-5 border-t border-gray-200 ">
+            <li className="px-3 py-5 border-t border-gray-200">
               <em>No wines match your search query.</em>
             </li>
           )}

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { forwardRef, useCallback } from 'react';
+import { forwardRef } from 'react';
 import { useNavigate } from 'react-router';
 import AutoComplete from '../../../components/elements/AutoComplete';
 import useLocale from '../../../hooks/useLocale';
@@ -8,24 +8,17 @@ const WineSearch = forwardRef(({ suggestions }, ref) => {
   const navigate = useNavigate();
   const locale = useLocale();
 
-  const onFilterOptions = useCallback(
-    (value) => {
-      return suggestions.filter(
-        (x) =>
-          // Match substring to lotCode or description
-          x.lotCode?.toLowerCase().includes(value.toLowerCase()) ||
-          x.description?.toLowerCase().includes(value.toLowerCase()),
-      );
-    },
-    [suggestions],
-  );
+  const onFilterOptions = (value) =>
+    suggestions.filter(
+      (x) =>
+        // Match substring to lotCode or description
+        x.lotCode?.toLowerCase().includes(value.toLowerCase()) ||
+        x.description?.toLowerCase().includes(value.toLowerCase()),
+    );
 
-  const onSelect = useCallback(
-    (value) => {
-      navigate(`/details/${value.lotCode}`);
-    },
-    [navigate],
-  );
+  const onSelect = (value) => {
+    navigate(`/details/${value.lotCode}`);
+  };
 
   const getHighlightedText = (str, match) =>
     str.replace(
@@ -33,50 +26,47 @@ const WineSearch = forwardRef(({ suggestions }, ref) => {
       (str) => `<span class="text-aqua">${str}</span>`,
     );
 
-  const onGetLabel = useCallback(
-    (suggestion, match) => {
-      return (
-        <div className="flex justify-between">
-          <div>
+  const onGetLabel = (suggestion, match) => {
+    return (
+      <div className="flex justify-between">
+        <div>
+          <p
+            dangerouslySetInnerHTML={{
+              __html: getHighlightedText(suggestion.lotCode, match),
+            }}
+          />
+          {suggestion.description ? (
             <p
+              className="text-sm"
               dangerouslySetInnerHTML={{
-                __html: getHighlightedText(suggestion.lotCode, match),
+                __html: getHighlightedText(suggestion.description, match),
               }}
             />
-            {suggestion.description ? (
-              <p
-                className="text-sm"
-                dangerouslySetInnerHTML={{
-                  __html: getHighlightedText(suggestion.description, match),
-                }}
-              />
-            ) : (
-              <p className="text-sm">
-                <em>No description provided</em>
-              </p>
-            )}
-          </div>
-          <div>
-            <p className="text-sm text-right text-dark/60 capitalize">
-              {suggestion.volume.toLocaleString(locale, {
-                style: 'unit',
-                unit: 'liter',
-                unitDisplay: 'short',
-              })}
+          ) : (
+            <p className="text-sm">
+              <em>No description provided</em>
             </p>
-            <p className="text-sm text-right text-dark/60">
-              {suggestion.tankCode}
-            </p>
-          </div>
+          )}
         </div>
-      );
-    },
-    [locale],
-  );
+        <div>
+          <p className="text-sm text-right text-dark/60 capitalize">
+            {suggestion.volume.toLocaleString(locale, {
+              style: 'unit',
+              unit: 'liter',
+              unitDisplay: 'short',
+            })}
+          </p>
+          <p className="text-sm text-right text-dark/60">
+            {suggestion.tankCode}
+          </p>
+        </div>
+      </div>
+    );
+  };
 
-  const onGetKey = useCallback((suggestion) => {
+  const onGetKey = (suggestion) => {
     return suggestion?.lotCode || '';
-  }, []);
+  };
 
   return (
     <AutoComplete
